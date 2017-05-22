@@ -18,29 +18,30 @@ print "target_name: ", target_name
 #This is only for low enery bluetooth devices
 service = DiscoveryService()
 
-while True:
+device_found = False
 
-    device_present = False
+while True:
 
     devices = service.discover(2)
 
-    for address, name in devices.items():
-        address = str.strip( address )
-        name = str.strip( name )
+    if target_address in devices and devices[target_address] == target_name:
         
-        if address == target_address     \
-            and target_name == name:
-            
-            device_present = True
+        if device_found == False:
 
-    if device_present == True:
-        print "Device Present"
+            print "Device returned"
+            device_found = True
+
     else:
-        print "Device away"
+            
+        if device_found == True:
+
+            print "Device Left"
+            device_found = False
+
+
+        
 
 #    print "You are away", datetime.datetime.now()
     time.sleep( SLEEP_INTERVAL )
-
-
 
 file.close()
